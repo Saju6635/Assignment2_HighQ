@@ -149,6 +149,54 @@ namespace GemHunter
                 Console.WriteLine();
             }
         }
+
+        public bool IsValidMove(Player player, char direction)
+        {
+            int newX = player.Position.X;
+            int newY = player.Position.Y;
+
+
+            switch (direction)
+            {
+                case 'U':
+                    newY = Math.Max(0, newY - 1);
+                    break;
+                case 'D':
+                    newY = Math.Min(5, newY + 1);
+                    break;
+                case 'L':
+                    newX = Math.Max(0, newX - 1);
+                    break;
+                case 'R':
+                    newX = Math.Min(5, newX + 1);
+                    break;
+
+            }
+
+
+            if (newX < 0 || newX >= Grid.GetLength(0) || newY < 0 || newY >= Grid.GetLength(1))
+            {
+                return false;
+            }
+
+            //Also Checks if the new position is not occupied by another player or an obstacle
+
+            return Grid[newX, newY].Occupant != "P1" && Grid[newX, newY].Occupant != "P2" && Grid[newX, newY].Occupant != "O";
+
+        }
+
+        //Method to check if the player's new position contains a gem and updates the player's GemCount
+        public void CollectGem(Player player)
+        {
+            if (Grid[player.Position.X, player.Position.Y].Occupant == "G")
+            {
+                player.GemCount++;
+
+                Grid[player.Position.X, player.Position.Y].Occupant = "-";
+
+            }
+
+        }
         public bool TotalGems()
         {
             foreach (Cell cell in Grid)
