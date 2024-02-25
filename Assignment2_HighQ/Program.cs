@@ -22,16 +22,7 @@ namespace GemHunter
 
     }
 
-    public class Cell
-    {
-        public string Occupant { get; set; } 
 
-  
-        public Cell()
-        {
-            Occupant = "-";
-        }
-    }
 
     public class Player
     {
@@ -138,11 +129,12 @@ namespace GemHunter
             }
         }
 
+
         //  to print the current state of the board
         public void Display(Player player1, Player player2)
         {
             Console.WriteLine("Gem Hunters Console Game");
-            Console.WriteLine("**********************************");
+            Console.WriteLine("****************************");
             for (int y = 0; y < 6; y++)
             {
                 for (int x = 0; x < 6; x++)
@@ -226,6 +218,17 @@ namespace GemHunter
         
     }
 
+    public class Cell
+    {
+        public string Occupant { get; set; }
+
+
+        public Cell()
+        {
+            Occupant = "-";
+        }
+    }
+
     public class Game
     {
         public Board Board { get; }
@@ -270,7 +273,7 @@ namespace GemHunter
                 }
                 else
                 {
-                    Console.WriteLine("Invalid move! Try again.");
+                    Console.WriteLine("Invalid move! Try again :)");
                 }
 
             } while (!IsGameOver());
@@ -298,16 +301,16 @@ namespace GemHunter
         public void AnnounceWinner()
         {
             Console.WriteLine("Game Over");
-            Console.WriteLine($"The {Player1.Name} collected {Player1.GemCount} gems.");
-            Console.WriteLine($"The {Player2.Name} collected {Player2.GemCount} gems.");
+            Console.WriteLine($"The {Player1.Name} collected {Player1.GemCount} gems in total.");
+            Console.WriteLine($"The {Player2.Name} collected {Player2.GemCount} gems in total.");
 
             if (Player1.GemCount > Player2.GemCount)
             {
-                Console.WriteLine($"{Player1.Name} wins the game");
+                Console.WriteLine($"So {Player1.Name} wins the game");
             }
             else if (Player1.GemCount < Player2.GemCount)
             {
-                Console.WriteLine($"{Player2.Name} wins the game");
+                Console.WriteLine($"So {Player2.Name} wins the game");
             }
             else
             {
