@@ -1,4 +1,4 @@
-Video Recording Link: 
+Video Recording Link: https://drive.google.com/file/d/1BBnoOoNG8q8j6UxwHecVpR-SeehSg5m_/view?usp=sharing
 
 #  Gem Hunter Game
 Gem hunter is a 2-D console based game where two players can play against each other, both players have to collect maximum number of gems from set number of turns.
