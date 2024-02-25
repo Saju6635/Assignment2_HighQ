@@ -138,16 +138,30 @@ namespace GemHunter
             }
         }
 
-        public void Display()
+        public void Display(Player player1, Player player2)
         {
-            for (int i = 0; i < 6; i++)
+            Console.WriteLine("Gem Hunters Console Game");
+            Console.WriteLine("**********************************");
+            for (int y = 0; y < 6; y++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int x = 0; x < 6; x++)
                 {
-                    Console.Write(Grid[i, j].Occupant + " "); // Display the occupant of each cell
+                    if (player1.Position.X == x && player1.Position.Y == y)
+                    {
+                        Console.Write("P1 ");
+                    }
+                    else if (player2.Position.X == x && player2.Position.Y == y)
+                    {
+                        Console.Write("P2 ");
+                    }
+                    else
+                    {
+                        Console.Write(Grid[x, y].Occupant + " ");
+                    }
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
 
         public bool IsValidMove(Player player, char direction)
@@ -210,17 +224,108 @@ namespace GemHunter
         }
         
     }
+
+    public class Game
+    {
+        public Board Board { get; }
+        public Player Player1 { get; }
+        public Player Player2 { get; }
+        public Player CurrentTurn { get; set; }
+        public int TotalTurns { get; private set; }
+
+        public Game()
+        {
+            Board = new Board();
+            Player1 = new Player("P1", new Position(0, 0));
+            Player2 = new Player("P2", new Position(5, 5));
+            CurrentTurn = Player1;
+            TotalTurns = 0;
+
+        }
+
+
+        public void Start()
+        {
+
+            do
+            {
+
+                Board.Display(Player1, Player2);
+                Console.WriteLine($"Turn {TotalTurns + 1} - {CurrentTurn.Name}'s turn");
+                Console.Write("Enter move (U/D/L/R): ");
+                char move = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                if (Board.IsValidMove(CurrentTurn, move))
+                {
+                    Board.Grid[CurrentTurn.Position.X, CurrentTurn.Position.Y].Occupant = "-";
+                    CurrentTurn.Move(move);
+                    Board.CollectGem(CurrentTurn);
+
+                    // Updating the new position
+                    Board.Grid[CurrentTurn.Position.X, CurrentTurn.Position.Y].Occupant = CurrentTurn.Name;
+                    SwitchTurn();
+
+                }
+                else
+                {
+                    Console.WriteLine("Invalid move! Try again.");
+                }
+
+            } while (!IsGameOver());
+
+
+            Board.Display(Player1, Player2);
+            AnnounceWinner();
+        }
+
+        private void SwitchTurn()
+        {
+
+            CurrentTurn = (CurrentTurn == Player1) ? Player2 : Player1;
+            TotalTurns++;
+        }
+
+        //Checking if reached 30 moves or total gems collected.
+        public bool IsGameOver()
+        {
+
+            return TotalTurns >= 30 || Board.TotalGems();
+        }
+        //Displaying the winner of the game
+        public void AnnounceWinner()
+        {
+            Console.WriteLine("Game Over");
+            Console.WriteLine($"The {Player1.Name} collected {Player1.GemCount} gems.");
+            Console.WriteLine($"The {Player2.Name} collected {Player2.GemCount} gems.");
+
+            if (Player1.GemCount > Player2.GemCount)
+            {
+                Console.WriteLine($"{Player1.Name} wins the game");
+            }
+            else if (Player1.GemCount < Player2.GemCount)
+            {
+                Console.WriteLine($"{Player2.Name} wins the game");
+            }
+            else
+            {
+                Console.WriteLine("It's a tie between Player 1 and Player 2");
+            }
+        }
+
+
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            // Creating a new board
-            Board board = new Board();
 
-            // Display the board
-            board.Display();
+            Game gem = new Game();
+            gem.Start();
         }
     }
+
 
 
 
