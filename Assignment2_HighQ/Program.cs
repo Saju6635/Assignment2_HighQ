@@ -22,8 +22,6 @@ namespace GemHunter
 
     }
 
-
-
     public class Player
     {
         //Properties
@@ -330,14 +328,5 @@ namespace GemHunter
             gem.Start();
         }
     }
-
-
-
-
-
-
-
-
-
 
 }
