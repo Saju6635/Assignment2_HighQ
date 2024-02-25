@@ -138,6 +138,7 @@ namespace GemHunter
             }
         }
 
+        //  to print the current state of the board
         public void Display(Player player1, Player player2)
         {
             Console.WriteLine("Gem Hunters Console Game");
@@ -244,7 +245,7 @@ namespace GemHunter
         }
 
 
-        public void Start()
+        public void Start()// method to Begin the game, displays the board, and alternates player turns.
         {
 
             do
@@ -252,7 +253,7 @@ namespace GemHunter
 
                 Board.Display(Player1, Player2);
                 Console.WriteLine($"Turn {TotalTurns + 1} - {CurrentTurn.Name}'s turn");
-                Console.Write("Enter move (U/D/L/R): ");
+                Console.Write("Enter your move (U/D/L/R): ");
                 char move = Console.ReadKey().KeyChar;
                 Console.WriteLine();
 
@@ -279,6 +280,7 @@ namespace GemHunter
             AnnounceWinner();
         }
 
+        //to switch turns between player 1 and player 2
         private void SwitchTurn()
         {
 
